@@ -1,0 +1,5 @@
+# .gitignore for project Rental Reservation
+
+### Python
+*.pyc
+**/migrations/**

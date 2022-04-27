@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Homepage
+{% endblock %}
+
+{% block extra_head %}
+    <head>
+        <!-- CSS stylesheet -->
+        <style type="text/css">
+            html, body { height: 100%; }
+            #green { height: 100%; background: #e7e7e7; text-align: center; color: black; padding: 15px; }
+        </style>
+    </head>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{% url 'rental_reservation:home-page' %}">
+                            Home
+                        </a>
+                    </li>
+                <ul>
+            </div>
+            <div class="col-md-10">
+                <table class="table table-condensed">
+                    {% for rent in rental_objs %}
+                        <tr>
+                            <td style="font-weight: bold;">
+                                {{rent}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Rental Name
+                                    </td>
+                                    <td style="font-weight: bold;">
+                                        Checkin
+                                    </td>
+                                    <td style="font-weight: bold;">
+                                        Checkout
+                                    </td>
+                                    <td style="font-weight: bold;">
+                                        Previous reservation ID
+                                    </td>
+                                </tr>
+                                {% for reservation in rent.rentalreservation_set.all %}
+                                    <tr>
+                                        <td>
+                                            {{reservation.rental_id}}
+                                        </td>
+                                        <td>
+                                            {{reservation.checkin_date}}
+                                        </td>
+                                        <td>
+                                            {{reservation.checkout_date}}
+                                        </td>
+                                        <td>
+                                            {% if reservation.prev_reservation_id %}
+                                                {{reservation.prev_reservation_id}}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    No Reservation records found!!!
+                                {% endfor %}
+                            </table>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
